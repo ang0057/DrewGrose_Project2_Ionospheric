@@ -4,7 +4,7 @@ clc;
 
 % Project 2 initial commit
 
-% figured out ftp, here is the 10.7cm data for my birthday (8/15/03)
+% figured out ftp, here is the solar data for my birthday (8/15/03)
 % :Product: Daily Solar Data         2003_DSD.txt
 % #
 % #  Prepared by the U.S. Dept. of Commerce, NOAA, Space Environment Center.
@@ -18,3 +18,20 @@ clc;
 % #  Date     10.7cm Number  Hemis. Regions Field  Flux   C  M  X  S  1  2  3
 % #---------------------------------------------------------------------------
 % 2003 08 15  131     86      540      1    -999   B6.8   9  0  0  5  0  0  0
+
+% K/A Index:
+% 
+% :Product: Daily Geomagnetic Data     2003_DGD.txt
+% #
+% #  Prepared by the U.S. Dept. of Commerce, NOAA, Space Environment Center.
+% #  Please send comment and suggestions to sec.webmaster@noaa.gov
+% #
+% #                         2003 Daily Geomagnetic Data
+% #
+% #                Middle Latitude        High Latitude            Estimated
+% #              - Fredericksburg -     ---- College ----      --- Planetary ---
+% #  Date        A     K-indices        A     K-indices        A     K-indices
+% #------------------------------------------------------------------------------
+% 2003 08 15     9  2 2 2 2 2 3 2 3    12  3 3 3 1 2 4 2 2    14  3 2 3 2 3 4 4 3
+
+% 
