@@ -1,8 +1,8 @@
+% Project 2: Space Weather Report
+% Part 1 (Everybody)
 close all;
 clear;
 clc;
-
-% Project 2 initial commit
 
 % figured out ftp, here is the solar data for my birthday (8/15/03)
 % :Product: Daily Solar Data         2003_DSD.txt
@@ -34,4 +34,5 @@ clc;
 % #------------------------------------------------------------------------------
 % 2003 08 15     9  2 2 2 2 2 3 2 3    12  3 3 3 1 2 4 2 2    14  3 2 3 2 3 4 4 3
 
-% 
+% GOES data filename:
+% GOES12_K0_MAG_3014472.csv
