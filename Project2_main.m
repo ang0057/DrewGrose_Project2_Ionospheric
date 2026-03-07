@@ -128,3 +128,25 @@ xlim(x_limits);
 grid on;
 set(ax4, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
 
+%% Command Window Output for easy interpreting
+fprintf('\n==================================================\n');
+fprintf(' SPACE WEATHER SUMMARY: %s\n', datestr(targetDate));
+fprintf('==================================================\n\n');
+
+fprintf('1) STATE OF THE SUN\n');
+fprintf('   - 10.7 cm Radio Flux: %d sfu\n', f107);
+fprintf('   - Sunspot Number:     %d\n\n', ssn);
+
+fprintf('2) INTERPLANETARY MEDIUM\n');
+fprintf('   - Max Solar Wind Speed: %.1f km/s\n', max(sw_spd));
+fprintf('   - Min IMF Bz:           %.1f nT\n\n', min(imf_bz));
+
+fprintf('3) EARTH''S MAGNETOSPHERE\n');
+fprintf('   - Maximum Kp Index:     %d\n', max(kp_indices));
+
+if max(kp_indices) >= 5
+    fprintf('   - Condition: Geomagnetic Storming Present\n');
+else
+    fprintf('   - Condition: Quiet to Active (No major storming)\n');
+end
+fprintf('==================================================\n');
