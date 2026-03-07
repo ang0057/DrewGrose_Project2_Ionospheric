@@ -4,43 +4,6 @@ close all;
 clear;
 clc;
 
-% comments where i was figuring out data:
-
-% figured out ftp, here is the solar data for my birthday (8/15/03)
-% :Product: Daily Solar Data         2003_DSD.txt
-% #
-% #  Prepared by the U.S. Dept. of Commerce, NOAA, Space Environment Center.
-% #  Please send comments and suggestions to sec.webmaster@noaa.gov
-% #
-% #                           2003 Daily Solar Data
-% #
-% #                         Sunspot       Stanford GOES8
-% #           Radio  SESC     Area          Solar  X-Ray  ------ Flares ------
-% #           Flux  Sunspot  10E-6   New     Mean  Bkgd    X-Ray      Optical
-% #  Date     10.7cm Number  Hemis. Regions Field  Flux   C  M  X  S  1  2  3
-% #---------------------------------------------------------------------------
-% 2003 08 15  131     86      540      1    -999   B6.8   9  0  0  5  0  0  0
-
-% K/A Index:
-% 
-% :Product: Daily Geomagnetic Data     2003_DGD.txt
-% #
-% #  Prepared by the U.S. Dept. of Commerce, NOAA, Space Environment Center.
-% #  Please send comment and suggestions to sec.webmaster@noaa.gov
-% #
-% #                         2003 Daily Geomagnetic Data
-% #
-% #                Middle Latitude        High Latitude            Estimated
-% #              - Fredericksburg -     ---- College ----      --- Planetary ---
-% #  Date        A     K-indices        A     K-indices        A     K-indices
-% #------------------------------------------------------------------------------
-% 2003 08 15     9  2 2 2 2 2 3 2 3    12  3 3 3 1 2 4 2 2    14  3 2 3 2 3 4 4 3
-
-% GOES data filename:
-% GOES12_K0_MAG_3014472.csv
-
-% project start:
-
 % August 15, 2003
 targetDate = datetime(2003, 8, 15);
 % disp(['Generating Space Weather Report for: ', datestr(targetDate)]);
@@ -92,5 +55,76 @@ goes_hp   = goes_data{:, 2};
 goes_hp(goes_hp < -9000) = NaN;
 
 %% ========
-% PLOTTING
-% =========
+%  PLOTTING
+%  ========
+
+% Create figure to take up a full page in latex
+% also force light mode because my matlab is in dark mode
+fig = figure('Name', 'Space Weather Report: 08/15/2003', ...
+             'Units', 'inches', 'Position', [1, 1, 6.5, 9], 'Color', 'w');
+
+% --- Subplot 1: State of the Sun ---
+ax1 = subplot(5,1,1);
+yyaxis left
+plot(x_limits, [f107 f107], '-', 'Color', [0.8500 0.3250 0.0980], 'LineWidth', 2);
+ylabel('F10.7 (sfu)');
+ylim([0, max(200, f107*1.5)]); 
+
+yyaxis right
+plot(x_limits, [ssn ssn], '-', 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 2);
+ylabel('Sunspot #');
+ylim([0, max(200, ssn*1.5)]);
+
+title('1) State of the Sun: F10.7 Flux & Sunspot Number', 'Color', 'k');
+xlim(x_limits);
+grid on;
+set(ax1, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
+
+% --- Subplot 2: Interplanetary Medium (Solar Wind & Particle Flux) ---
+ax3 = subplot(5,1,2);
+yyaxis left
+plot(time_omni, sw_spd, 'b', 'LineWidth', 1.2);
+ylabel('Speed (km/s)');
+
+yyaxis right
+plot(time_omni, sw_dens, 'Color', [0.4940 0.1840 0.5560], 'LineWidth', 1.2);
+ylabel('Density (n/cc)');
+
+title('2) Interplanetary Medium: Solar Wind & Particle Flux', 'Color', 'k');
+xlim(x_limits);
+grid on;
+set(ax3, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
+
+% --- Subplot 3: Interplanetary Medium (IMF) ---
+ax2 = subplot(5,1,3);
+plot(time_omni, imf_bz, 'r', 'LineWidth', 1.2);
+yline(0, 'k--', 'LineWidth', 1); 
+ylabel('IMF B_z (nT)');
+title('2) Interplanetary Medium: Magnetic Field', 'Color', 'k');
+xlim(x_limits);
+grid on;
+set(ax2, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
+
+
+
+% --- Subplot 4: Earth's Magnetosphere (K/A Index) ---
+ax5 = subplot(5,1,4);
+bar(time_kp, kp_indices, 'FaceColor', [0.2 0.6 0.5], 'BarWidth', 1);
+ylabel('Kp Index');
+xlabel('Time (UTC)');
+ylim([0 9]);
+yline(5, 'r--', 'G1 Storm Threshold');
+title('3) Earth''s Magnetosphere: Planetary K/A Index', 'Color', 'k');
+xlim(x_limits);
+grid on;
+set(ax5, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
+
+% --- Subplot 5: Earth's Magnetosphere (Magnetometer) ---
+ax4 = subplot(5,1,5);
+plot(time_goes, goes_hp, 'k', 'LineWidth', 1.2);
+ylabel('GOES H_p (nT)');
+title('3) Earth''s Magnetosphere: GOES-12 Magnetometer', 'Color', 'k');
+xlim(x_limits);
+grid on;
+set(ax4, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
+
